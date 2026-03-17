@@ -1,0 +1,456 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background: url('../images/fondo_cancha.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: none;
+    display: inline-block;
+}
+
+.btn-back {
+    background-color: #3498db;
+    margin-right: 10px;
+}
+
+.btn-back:hover {
+    background-color: #2980b9;
+}
+
+.btn-new {
+    background-color: #2ecc71;
+}
+
+.btn-new:hover {
+    background-color: #27ae60;
+}
+
+.btnEditar {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: none;
+    display: inline-block;
+}
+
+.btnEditar:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+thead {
+    background-color: #3498db;
+    color: white;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f4f7;
+}
+
+.col-cliente {
+    width: 20%;
+}
+
+.col-cancha {
+    width: 15%;
+}
+
+.col-fecha {
+    width: 15%;
+}
+
+.col-hora-inicio {
+    width: 10%;
+}
+
+.col-hora-fin {
+    width: 10%;
+}
+
+.col-estado {
+    width: 10%;
+}
+
+.col-acciones {
+    width: 20%;
+    text-align: center;
+}
+
+.price {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.actions a, .actions btn {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 14px;
+}
+
+.actions a:hover,
+.actions btn:hover {
+    text-decoration: underline;
+}
+
+.status-pending {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.status-confirmed {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #3498db;
+    margin: 0 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pagination span {
+    font-weight: bold;
+}
+
+/* === Estilos de Modal === */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    border: none;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.modal-content label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="tel"],
+.modal-content input[type="email"],
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.time-container {
+    display: flex;
+    gap: 10px;
+}
+
+.half-width {
+    flex: 1;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-content .btn {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.modal-content .btn-primary {
+    background-color: #2ecc71;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.modal-content .btn-primary:hover {
+    background-color: #27ae60;
+}
+
+.modal-content .btn-secondary {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.modal-content .btn-cancel {
+    background-color: #e74c3c;
+}
+
+.modal-content .btn-cancel:hover {
+    background-color: #c0392b;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+}
+
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.time-container {
+    display: flex;
+    gap: 10px;
+}
+
+.half-width {
+    flex: 1;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+}
+
+.btn-cancel:hover {
+    background-color: #c0392b;
+}
+
+
+.alert-danger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 300px;
+    padding: 10px 15px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: 1px solid #e74c3c;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.3s ease-out;
+    z-index: 9999;
+}
+
+.js-example-basic-singleO{
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+    
+.btnEditar{
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: none;
+    display: inline-block;
+}
+
+.barra-busqueda {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.barra-busqueda {
+    max-width: 500px; 
+    width: 100%;      
+    margin: 0 auto 20px; 
+    display: flex;
+    gap: 8px;
+}
+
+.barra-busqueda input[type="text"] {
+    flex-grow: 1;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1.8px solid #3498db;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.barra-busqueda button {
+    padding: 8px 18px;
+    border-radius: 6px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.barra-busqueda button:hover {
+    background-color: #2980b9;
+}
+
+.barra-busqueda a{
+    padding: 6px 18px;
+    border-radius: 6px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.barra-busqueda a:hover {
+    background-color: #2980b9;
+}

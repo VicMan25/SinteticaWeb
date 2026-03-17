@@ -1,0 +1,96 @@
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background: url('../images/fondo_cancha.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Contenedor del login */
+.container {
+  max-width: 400px;
+  margin: 100px auto 0 auto; 
+  background-color: rgba(255, 255, 255, 0.92);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+
+/* Títulos */
+.container h1 {
+    font-size: 26px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.container h3 {
+    font-size: 18px;
+    color: #3498db;
+    margin-bottom: 25px;
+}
+
+/* Etiquetas de los campos */
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.8px solid #3498db;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+/* Botón de login */
+.wrap button {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wrap button:hover {
+    background-color: #27ae60;
+}
+
+p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+p a {
+    color: #3498db;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+p a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
