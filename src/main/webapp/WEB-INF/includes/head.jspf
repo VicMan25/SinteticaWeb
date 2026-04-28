@@ -1,0 +1,47 @@
+<%-- Bloque <head> común: Tailwind, FontAwesome, Inter, paleta La Bombonera --%>
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/iconoPr.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: { sans: ['Inter', 'sans-serif'] },
+                colors: {
+                    bombonera: {
+                        50:  '#ecfdf5',
+                        100: '#d1fae5',
+                        200: '#a7f3d0',
+                        500: '#10b981',
+                        600: '#059669',
+                        700: '#047857',
+                        800: '#065f46',
+                        900: '#064e3b'
+                    }
+                },
+                boxShadow: {
+                    'card': '0 2px 12px rgba(0,0,0,0.06)',
+                    'card-hover': '0 10px 24px rgba(0,0,0,0.12)'
+                }
+            }
+        }
+    };
+</script>
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #111827; }
+    .table-hover tbody tr:hover { background-color: #f0fdf4; }
+    .fade-in { animation: fadeIn .25s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    /* Override Select2 para que combine con el diseño */
+    .select2-container--default .select2-selection--single {
+        height: 42px !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 0.5rem !important;
+        padding: 4px 6px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 32px !important; }
+    .select2-container--default .select2-selection--single .select2-selection__arrow { height: 40px !important; }
+    .select2-dropdown { border-radius: 0.5rem !important; border-color: #d1d5db !important; }
+    .select2-container--default .select2-results__option--highlighted[aria-selected] { background-color: #047857 !important; }
+</style>

@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/reservasSintetica"/>
+<!--
+    Contexto de la aplicación SinteticaWeb para Tomcat.
+
+    Este archivo declara el DataSource JNDI usado por ConexionBD. Tomcat 9
+    trae DBCP2 integrado (tomcat-dbcp.jar), por eso NO se requiere ninguna
+    dependencia extra en pom.xml: el pool lo gestiona Tomcat y el driver
+    MySQL (mysql-connector-j) ya viaja en WEB-INF/lib del WAR.
+
+    ### Cómo sobrescribir credenciales en PRODUCCIÓN (sin tocar el WAR) ###
+
+    Copiar este archivo a:
+        $CATALINA_BASE/conf/Catalina/localhost/reservasSintetica.xml
+    y ajustar "username" / "password" / "url" allí. Tomcat usa ese archivo
+    con prioridad sobre META-INF/context.xml del WAR, por lo que las
+    credenciales reales de producción NUNCA se commitean al repositorio.
+-->
+<Context path="/reservasSintetica">
+
+    <Resource name="jdbc/bombonera"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/gestion_reservas?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=America/Bogota&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+              username="root"
+              password="admin"
+
+              initialSize="2"
+              minIdle="2"
+              maxIdle="10"
+              maxTotal="20"
+              maxWaitMillis="10000"
+
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              testWhileIdle="true"
+              timeBetweenEvictionRunsMillis="30000"
+
+              removeAbandonedOnBorrow="true"
+              removeAbandonedTimeout="60"
+              logAbandoned="true"
+              defaultAutoCommit="true"/>
+
+</Context>
