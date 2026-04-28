@@ -1,0 +1,119 @@
+<%@ page import="umariana.reservassintetica.Usuario" %>
+<%
+    Usuario __usuarioNav = (Usuario) session.getAttribute("usuarioLogueado");
+    String __activeNav = (String) request.getAttribute("activeNav");
+    if (__activeNav == null) __activeNav = "";
+    String __ctx = request.getContextPath();
+    // Clases helper
+    String __baseLink  = "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition";
+    String __idleLink  = __baseLink + " text-green-50/80 hover:text-white hover:bg-white/10";
+    String __activeLnk = __baseLink + " text-white bg-white/20 ring-1 ring-white/30";
+%>
+<nav class="bg-gradient-to-r from-bombonera-800 via-bombonera-700 to-bombonera-600 shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="<%= __ctx %>/principal.jsp" class="flex items-center gap-3 group">
+                <span class="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md group-hover:scale-105 transition">
+                    <i class="fa-solid fa-futbol text-xl text-bombonera-700"></i>
+                </span>
+                <div class="leading-tight hidden sm:block">
+                    <div class="text-white font-bold text-lg">La Bombonera</div>
+                    <div class="text-green-100 text-[11px] -mt-0.5">Reservas Deportivas</div>
+                </div>
+            </a>
+
+            <!-- Links desktop -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="<%= __ctx %>/principal.jsp" class="<%= "dashboard".equals(__activeNav) ? __activeLnk : __idleLink %>">
+                    <i class="fa-solid fa-gauge-high"></i> Dashboard
+                </a>
+                <a href="<%= __ctx %>/reservas.jsp" class="<%= "reservas".equals(__activeNav) ? __activeLnk : __idleLink %>">
+                    <i class="fa-solid fa-calendar-check"></i> Reservas
+                </a>
+                <a href="<%= __ctx %>/canchas.jsp" class="<%= "canchas".equals(__activeNav) ? __activeLnk : __idleLink %>">
+                    <i class="fa-solid fa-flag-checkered"></i> Canchas
+                </a>
+                <a href="<%= __ctx %>/clientes.jsp" class="<%= "clientes".equals(__activeNav) ? __activeLnk : __idleLink %>">
+                    <i class="fa-solid fa-users"></i> Clientes
+                </a>
+                <a href="<%= __ctx %>/finanzas.jsp" class="<%= "finanzas".equals(__activeNav) ? __activeLnk : __idleLink %>">
+                    <i class="fa-solid fa-sack-dollar"></i> Finanzas
+                </a>
+            </div>
+
+            <!-- Usuario -->
+            <div class="flex items-center gap-2">
+                <div class="relative" id="userMenuWrap">
+                    <button id="userMenuBtn" type="button"
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition">
+                        <span class="inline-flex items-center justify-center w-8 h-8 bg-white text-bombonera-700 rounded-full font-bold text-sm">
+                            <%
+                                String __ini = "U";
+                                if (__usuarioNav != null && __usuarioNav.getNombre() != null && !__usuarioNav.getNombre().isEmpty()) {
+                                    __ini = __usuarioNav.getNombre().substring(0,1).toUpperCase();
+                                }
+                            %>
+                            <%= __ini %>
+                        </span>
+                        <span class="hidden sm:block text-sm font-medium max-w-[140px] truncate">
+                            <%= __usuarioNav != null ? __usuarioNav.getNombre() : "Usuario" %>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="userMenu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl ring-1 ring-black/5 overflow-hidden">
+                        <div class="px-4 py-3 bg-gray-50 border-b border-gray-100">
+                            <p class="text-sm font-semibold text-gray-800 truncate">
+                                <i class="fa-solid fa-user text-bombonera-700 mr-1"></i>
+                                <%= __usuarioNav != null ? __usuarioNav.getNombre() : "" %>
+                            </p>
+                            <p class="text-xs text-gray-500 truncate">
+                                <i class="fa-solid fa-envelope mr-1"></i>
+                                <%= __usuarioNav != null && __usuarioNav.getEmail() != null ? __usuarioNav.getEmail() : "—" %>
+                            </p>
+                        </div>
+                        <a href="<%= __ctx %>/principal.jsp" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-house text-gray-400 w-4"></i> Inicio
+                        </a>
+                        <a href="<%= __ctx %>/finanzas.jsp" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-chart-line text-gray-400 w-4"></i> Finanzas
+                        </a>
+                        <div class="border-t border-gray-100"></div>
+                        <a href="<%= __ctx %>/LogoutServlet" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">
+                            <i class="fa-solid fa-right-from-bracket w-4"></i> Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hamburguesa mobile -->
+                <button id="mobileMenuBtn" type="button" class="md:hidden ml-1 p-2 rounded-lg text-white hover:bg-white/10">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Links mobile -->
+        <div id="mobileMenu" class="hidden md:hidden pb-3 space-y-1">
+            <a href="<%= __ctx %>/principal.jsp" class="block px-3 py-2 rounded-lg text-sm <%= "dashboard".equals(__activeNav) ? "bg-white/20 text-white" : "text-green-50/90 hover:bg-white/10" %>"><i class="fa-solid fa-gauge-high w-5"></i> Dashboard</a>
+            <a href="<%= __ctx %>/reservas.jsp"  class="block px-3 py-2 rounded-lg text-sm <%= "reservas".equals(__activeNav)  ? "bg-white/20 text-white" : "text-green-50/90 hover:bg-white/10" %>"><i class="fa-solid fa-calendar-check w-5"></i> Reservas</a>
+            <a href="<%= __ctx %>/canchas.jsp"   class="block px-3 py-2 rounded-lg text-sm <%= "canchas".equals(__activeNav)   ? "bg-white/20 text-white" : "text-green-50/90 hover:bg-white/10" %>"><i class="fa-solid fa-flag-checkered w-5"></i> Canchas</a>
+            <a href="<%= __ctx %>/clientes.jsp"  class="block px-3 py-2 rounded-lg text-sm <%= "clientes".equals(__activeNav)  ? "bg-white/20 text-white" : "text-green-50/90 hover:bg-white/10" %>"><i class="fa-solid fa-users w-5"></i> Clientes</a>
+            <a href="<%= __ctx %>/finanzas.jsp"  class="block px-3 py-2 rounded-lg text-sm <%= "finanzas".equals(__activeNav)  ? "bg-white/20 text-white" : "text-green-50/90 hover:bg-white/10" %>"><i class="fa-solid fa-sack-dollar w-5"></i> Finanzas</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    (function () {
+        var btn  = document.getElementById('userMenuBtn');
+        var menu = document.getElementById('userMenu');
+        var wrap = document.getElementById('userMenuWrap');
+        if (btn && menu && wrap) {
+            btn.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('hidden'); });
+            document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) menu.classList.add('hidden'); });
+        }
+        var mb = document.getElementById('mobileMenuBtn');
+        var mm = document.getElementById('mobileMenu');
+        if (mb && mm) mb.addEventListener('click', function () { mm.classList.toggle('hidden'); });
+    })();
+</script>

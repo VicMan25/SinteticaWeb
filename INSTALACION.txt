@@ -1,0 +1,101 @@
+============================================================
+ SinteticaWeb - La Bombonera
+ Guia de instalacion y configuracion
+============================================================
+
+REQUISITOS
+----------
+ - Java 8 (JDK)
+ - Apache Tomcat 9.x
+ - MySQL 5.7+ / 8.x
+ - Maven (para compilar) o NetBeans
+
+
+1) BASE DE DATOS
+----------------
+ a) Crear base y usuario. Ejemplo:
+
+      CREATE DATABASE gestion_reservas
+          CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+      CREATE USER 'bombonera'@'localhost' IDENTIFIED BY 'UN_PASSWORD_FUERTE';
+      GRANT ALL PRIVILEGES ON gestion_reservas.* TO 'bombonera'@'localhost';
+      FLUSH PRIVILEGES;
+
+ b) Ejecutar los scripts de esquema:
+
+      mysql -u bombonera -p gestion_reservas < src/main/resources/schema_usuarios.sql
+      # (agregar aqui los DDL de clientes, canchas, reservas cuando se formalicen)
+
+
+2) COMPILAR Y EMPAQUETAR
+------------------------
+      mvn clean package
+      # Genera target/hospital-1.0.war
+
+
+3) CONFIGURAR LAS CREDENCIALES DE BD
+------------------------------------
+ La aplicacion NO tiene credenciales hardcoded. Lee un DataSource JNDI
+ llamado "jdbc/bombonera" que se define en META-INF/context.xml.
+
+ -- DESARROLLO (usar los valores por defecto del WAR) ----------------
+ El archivo src/main/webapp/META-INF/context.xml ya trae valores de
+ desarrollo (localhost:3306, usuario root). Funciona sin mas cambios.
+
+ -- PRODUCCION (override sin modificar el WAR) ----------------------
+ Copiar este archivo en el servidor:
+
+      $CATALINA_BASE/conf/Catalina/localhost/reservasSintetica.xml
+
+ Con contenido:
+
+      <?xml version="1.0" encoding="UTF-8"?>
+      <Context path="/reservasSintetica">
+          <Resource name="jdbc/bombonera"
+                    auth="Container"
+                    type="javax.sql.DataSource"
+                    driverClassName="com.mysql.cj.jdbc.Driver"
+                    url="jdbc:mysql://SERVIDOR:3306/gestion_reservas?useSSL=true&amp;serverTimezone=America/Bogota"
+                    username="bombonera"
+                    password="EL_PASSWORD_REAL"
+                    initialSize="2"
+                    minIdle="2"
+                    maxIdle="10"
+                    maxTotal="20"
+                    maxWaitMillis="10000"
+                    validationQuery="SELECT 1"
+                    testOnBorrow="true"/>
+      </Context>
+
+ Tomcat lee ese archivo con prioridad sobre el que viene dentro del WAR,
+ asi las credenciales reales NUNCA viajan en el repositorio ni en el
+ artefacto desplegable.
+
+ Protege el archivo con permisos restrictivos:
+      chmod 600 reservasSintetica.xml
+      chown tomcat:tomcat reservasSintetica.xml
+
+
+4) DESPLIEGUE
+-------------
+ Copiar el WAR a $CATALINA_BASE/webapps/reservasSintetica.war y arrancar
+ Tomcat. La primera vez que arranca, InitListener crea el usuario admin
+ por defecto (admin / admin123) si la tabla usuarios esta vacia.
+
+ !!! CAMBIAR ESA CONTRASENA INMEDIATAMENTE !!!
+
+
+5) VERIFICACION
+---------------
+ - Abrir http://SERVIDOR:8080/reservasSintetica/
+ - Login admin / admin123
+ - Si ves "No se pudo resolver el DataSource JNDI" en catalina.out, el
+   Resource del paso 3 no esta declarado o el driver MySQL no esta en
+   WEB-INF/lib. El WAR construido con Maven ya lo incluye.
+
+
+6) LOGS
+-------
+ $CATALINA_BASE/logs/catalina.out        (startup y errores generales)
+ $CATALINA_BASE/logs/localhost.*.log     (mensajes de los servlets/JSPs)
